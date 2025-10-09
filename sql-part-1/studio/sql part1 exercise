@@ -1,0 +1,42 @@
+select * from [dbo].[books]
+-- Question 1: Select the [top 1000 rows](https://www.w3schools.com/sql/sql\\_top.asp) from the books table.  Make sure you are able to see all of the columns.
+select top(1000)*  from [dbo].[books]
+-- Question 2: Count the number of titles.  Are there 10,000 titles as promised by the dataset?
+select count(title) from [dbo].[books]
+-- Question 3: Count the number of books where the `original_publication_year` is earlier than 1800.
+select count(*) from [dbo].[books] where original_publication_year<1800
+-- Question 4: Create a query that displays distinct authors from the table.
+select distinct(authors) from [dbo].[books] 
+-- Question 5: Create a query that displays a count of all the books that contain a language code for English.  This could be represented in the table as \"eng\" or \"en-\".
+select count(*) from [dbo].[books] where language_code='eng' or language_code like 'en-%'
+-- Question 6: Create a query to check how many original titles were written during World War I era (1914-1921).
+select count(original_title) from [dbo].[books] where original_publication_year BETWEEN 1914 AND 1921
+-- Book tags Table
+-- Question 1: Select the top 1000 table items ordered by the `tag_id`.
+select * from [dbo].[book_tags]
+select top(1000)* from [dbo].[book_tags] ORDER BY tag_id 
+-- Question 2: Create a query that counts the number of `goodreads_book_id` grouped by the `tag_id`.
+select tag_id,count(goodreads_book_id) from [dbo].[book_tags] GROUP BY tag_id
+-- Question 3: In the last query, we created a new, unnamed column.  Use `AS` to create an alias to provide a name of your choice to this new column.
+select tag_id,count(goodreads_book_id) AS goodreads_count from [dbo].[book_tags] GROUP BY tag_id
+-- Ratings table
+-- Question 1: Create a query that displays the top 1000 items in the table in descending order.
+select * from [dbo].[ratings]
+select top(1000) * from [dbo].[ratings] order by user_id DESC
+-- Question 2: Create a query that returns the total number of users that have given a rating of less than 2.
+select count(*) as total_users from [dbo].[ratings] where rating<2
+-- Question 3: Create a query that returns the sum of books that have a rating of 4 or higher.
+select count(*) as sum_of_books from [dbo].[ratings] where rating>=4
+-- tags table
+-- Question 1: Create a query that returns table items where the `tag_name` describes the book as a mystery.
+select * from [dbo].[tags]
+select * from [dbo].[tags] where tag_name = 'mystery'
+-- Question 2: Run the query below. In your own words, what is it returning?
+SELECT * FROM BooksDB.dbo.tags WHERE tag_name < 'd' AND tag_name >= 'c';
+--Ans: It is giving the output of tag_name that are starting with c and their tag_id.
+--Question 1:  Create a query that uses the `user_id` to count the total number of books that each user wants to read.  Print the results in ascending order by `user_id` under the alias 'Total Books To Read'.
+select * from [dbo].[to_read]
+select user_id, count(book_id) as 'total books to read' from [dbo].[to_read] group by user_id order by user_id asc
+-- Question 2: Create a query that uses `user_id` to count the total number of books each user wants to read.  Have the results sort the table by the total number of `book_ids` in descending order and under the alias 'Total Books To Read'.
+--Hint: You can use both `GROUP BY` and `ORDER BY` to complete this query.
+select user_id, count(book_id) as 'total books to read' from [dbo].[to_read] group by user_id order by 'total books to read' DESC
