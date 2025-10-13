@@ -1,0 +1,20 @@
+select * from dbo.books
+
+select top 100 *, book_id, authors,title,average_rating as rating from dbo.books order by average_rating DESC
+
+-- return least popular book
+
+select book_id ,authors,title, average_rating from dbo.books order by average_rating asc
+
+--Question 3: Which tag is the most popular?
+
+select * from dbo.tags
+
+select count(*) as popular from dbo.tags order by 
+
+-- -- return name of most popular tag
+select top 1*
+
+
+
+
