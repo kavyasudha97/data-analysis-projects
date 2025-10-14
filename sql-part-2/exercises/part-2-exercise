@@ -1,0 +1,9 @@
+select * from dbo.other_FHV_services_jan_aug_2015
+
+-- Write a query that returns the last 3 characters of the base name in other_FHV_services_jan_aug_2015. 
+-- Do you see anything that is a common abbreviation at the end of business names?
+select RIGHT(base_name,3) as fhv_services from dbo.other_FHV_services_jan_aug_2015
+
+-- The number of trips and the number of pickups are both stored as strings in other_FHV_services_jan_aug_2015. 
+--This is because the data provided included spaces in some of the numbers. 
+--Write a query that returns the location of spaces in both of these columns.
