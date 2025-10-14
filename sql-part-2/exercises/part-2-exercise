@@ -7,3 +7,25 @@ select RIGHT(base_name,3) as fhv_services from dbo.other_FHV_services_jan_aug_20
 -- The number of trips and the number of pickups are both stored as strings in other_FHV_services_jan_aug_2015. 
 --This is because the data provided included spaces in some of the numbers. 
 --Write a query that returns the location of spaces in both of these columns.
+select base_name,number_of_trips,'number_of_pickups',charindex(' ',Number_of_Trips) as space_of_trips,CHARINDEX(' ','number_of_pickups') as space_of_pickup from dbo.other_FHV_services_jan_aug_2015 
+
+-- For other_FHV_services_jan_aug_2015, display the name of month of the pickup date and order in descending order. 
+--Is the result of this query what you expected?
+select Pick_Up_Date, DATENAME(month,Pick_Up_Date) as pickup_month from dbo.other_FHV_services_jan_aug_2015 order by Pickup_month DESC
+
+-- Using other_FHV_services_jan_aug_2015, write a query that 
+--returns the day number of the pickup date and month name and orders it in ascending order by day number.
+select Pick_Up_Date,DATENAME(DAY,Pick_Up_Date) as pickup_day,DATENAME(month,Pick_Up_Date) as pickup_month 
+ from dbo.other_FHV_services_jan_aug_2015 order by pickup_day,pickup_month asc
+
+ -- Write a query that returns the most easterly Lyft pickup.
+  select * from dbo.lyft
+  select max(start_lng) as easterly_pickup from dbo.lyft
+
+  -- Write a query the returns the most northerly Lyft pickup.
+
+  select max(start_lat) as northerly_pickup from dbo.lyft
+
+-- Using other_FHV_services_jan_aug_2015, write a query that connects the 
+-- the base number and the base name in a string that uses the following format: base_number: base_name.
+select base_number, base_name, CONCAt(base_number,': ',base_name) as format from dbo.other_FHV_services_jan_aug_2015
