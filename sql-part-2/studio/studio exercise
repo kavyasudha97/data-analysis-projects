@@ -77,7 +77,7 @@ SELECT
 -- v9\. Revisit question 7 using ISNULL instead of COALESCE.
 
 --> A.  Has this changed the language\_code  where the values are NULL?
-
+select * from dbo.books
 SELECT 
     CONCAT(title,' by ', authors,' in ', ISNULL(language_code,'unknown'), ' language') 
     AS Book_summary FROM dbo.books;

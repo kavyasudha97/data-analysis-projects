@@ -1,0 +1,33 @@
+select left(surname,3) as surname_first_3, nationality,driverId from formula_one.dbo.drivers;
+
+-- which month have the most races occured in?
+
+select * from formula_one.information_schema.columns 
+where table_name='races'
+select * from formula_one.dbo.races
+
+select month(date) as race_month, datename(month,date) as month_name, count(*) as num_races from formula_one.dbo.races
+group by month(date), datename(month, date) order by num_races desc
+
+select month(date) as race_month, datename(month,date) as month_name, count(*) as num_races from formula_one.dbo.races
+where year(date)>2014 group by month(date), datename(month,date) order by num_races desc;
+
+-- race revies ocur 4 days after each race. Calculate the day of the race review for every race in the races 
+
+select name as race_name, date as race_date, dateadd(day,4,date) as review_date from formula_one.dbo.races
+
+-- how can we display each race date as a formatted string like "sunday,march 28,2021"?
+
+select name as race_name, format(date,'ddd,MMMM dd, yyyy')  from formula_one.dbo.races 
+-- to order dates
+
+select name as race_name, format(date,'ddd,MMMM dd,yyyy') as formatted_date from formula_one.dbo.races order by date desc
+
+-- create a column that has a original title, if it exists, or title if original_title is null
+
+select authors, book_id, isnull(original_title,title) as original_title_refined from BooksDB.dbo.books
+
+select * from BooksDB.dbo.books where book_id = '5470'
+
+select authors, book_id, COALESCE(original_title,title) as original_title_refined from BooksDB.dbo.books
+
