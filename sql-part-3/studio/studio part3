@@ -1,0 +1,69 @@
+-- For each event write at least one query that joins any two tables in `BooksDB` to support your choice and record you thoughts as to why you used the paticlular query. 
+-- At least one of your queries needs to include a `HAVING` clause.
+SELECT 
+    t.tag_id,
+    t.tag_name,
+    COUNT(bt.goodreads_book_id) AS tag_usage_count
+FROM dbo.book_tags AS bt
+JOIN dbo.tags AS t
+    ON bt.tag_id = t.tag_id
+WHERE t.tag_name LIKE '%woman%'
+   OR t.tag_name LIKE '%female%'
+GROUP BY t.tag_id, t.tag_name
+HAVING COUNT(bt.goodreads_book_id) > 15
+ORDER BY tag_usage_count DESC;
+
+select * from dbo.tags
+
+--event 2: nswer:  month: october
+-- events: halloween,colombus day
+SELECT 
+    b.title,
+    b.authors,
+    t.tag_name,
+    COUNT(bt.tag_id) AS tag_usage
+FROM dbo.books AS b
+JOIN dbo.tags AS bt
+    ON b.book_id = bt.tag_id
+JOIN tags AS t
+    ON bt.tag_id = t.tag_id
+WHERE t.tag_name LIKE '%halloween%'
+   OR t.tag_name LIKE '%colombus%'
+   
+GROUP BY b.title, b.authors, t.tag_name
+ORDER BY tag_usage DESC;
+--part 2: choose another month
+--event: christmas
+SELECT 
+    b.title,
+    b.authors,
+    t.tag_name,
+    COUNT(bt.tag_id) AS tag_usage
+FROM dbo.books AS b
+JOIN dbo.tags AS bt
+    ON b.book_id = bt.tag_id
+JOIN tags AS t
+    ON bt.tag_id = t.tag_id
+WHERE t.tag_name LIKE '%christmas%'
+   OR t.tag_name LIKE '%black friday%'
+   
+GROUP BY b.title, b.authors, t.tag_name
+ORDER BY tag_usage DESC;
+
+--part3 : summarize your work
+ select bt.tag_id, count(bt.tag_id) as tag_count, t.tag_name
+ from booksdb.dbo.book_tags as bt 
+ inner join booksdb.dbo.tags as t
+ on t.tag_id = t.tag_id
+ where t.tag_name like '%witch%' or t.tag_name like '%black-cat%'
+ group by bt.tag_id, t.tag_name
+ order by tag_count desc
+
+SELECT bt.tag_id, COUNT(bt.tag_id) AS tag_count, t.tag_name
+FROM BooksDB.dbo.book_tags AS bt
+Inner JOIN BooksDB.dbo.tags AS t
+ON t.tag_id = t.tag_id
+WHERE t.tag_name LIKE '%employment%' OR t.tag_name LIKE '%disability%'
+GROUP BY bt.tag_id, t.tag_name
+HAVING COUNT(bt.[count]) < 1000
+oRDER BY tag_count DESC;
