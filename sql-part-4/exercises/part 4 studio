@@ -1,0 +1,59 @@
+-- 1st question
+ SELECT title
+FROM booksdb.dbo.books
+Where ISBN IN (select isbn
+
+                FROM BooksDB.dbo.books
+
+                where authors LIKE '%,%');
+
+select * from dbo.tags
+select * from dbo.book_tags
+
+--Answer: got output that has title(2003 rows) from books table and tag_id, tag_name from (34252 rows) tags table
+
+--2nd question
+
+
+SELECT title FROM books
+
+WHERE book_id IN (
+
+SELECT book_id
+
+FROM book_tags
+
+WHERE tag_id = (
+
+SELECT tag_id
+
+    FROM tags
+
+WHERE tag_name = 'Meditation'
+
+)
+
+);
+
+--Answer: got title (10000 rows) from boks table
+
+-- 3rd question
+select * from dbo.books
+
+select title, average_rating from BooksDB.dbo.books
+where average_rating >= 4.2 and title is NOT NULL
+order by average_rating DESC
+
+-- Answer: got 2253 rows of titles and average_rating 
+
+-- 4th question
+
+SELECT title, original_publication_year, average_rating
+FROM books
+WHERE average_rating < (
+    SELECT AVG(rating)
+    FROM ratings
+    WHERE ratings.book_id = books.book_id )
+ORDER BY original_publication_year, title;
+
+-- Answer: got 178 rows of title its original_publication_year, average_rating 
