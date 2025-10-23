@@ -1,0 +1,26 @@
+-- question 1
+select * from ratings
+select * from books
+select book_id, avg(rating) as avg_rating from ratings where rating>3 group by book_id
+-- Answer: got 10000 rows of book_id, avg_rating where rating >3
+
+--Question 2,3
+SELECT DISTINCT book_id FROM ratings WHERE rating = 1
+INTERSECT
+SELECT DISTINCT book_id FROM ratings WHERE rating = 5;
+-- Answer: got 7106 rows of book_id
+
+-- Question:4
+select  book_id,language_code from books where language_code = 'en-US'
+EXCEPT 
+select book_id, language_code from books where language_code='en-GB'
+--Answer: got 2070 rows of book_id,language_code which has language_code 'en-Us'
+
+--Question:5
+select * from book_tags
+SELECT tag_id
+FROM book_tags
+GROUP BY tag_id
+HAVING COUNT(goodreads_book_id) > 100000
+--Answer: got 860370 rows 
+
